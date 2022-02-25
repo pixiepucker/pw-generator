@@ -18,7 +18,18 @@ const pwSpecChar = [
 
 function generatePassword() {
   //when button is clicked(generateBtn), prompts are presented:
-  //  1. ask to include: lowercase, uppercase, numerics, special characters
+  
+  //  1. determine password length through prompt
+  var pwLength = function() {
+    var pwLengths = prompt("Please enter desired password length: ")
+    if (pwLengths<8 || pwLengths>128) {
+      alert('Please enter a value between 8 and 128.');
+      pwLength();
+      }
+    };
+    pwLength();
+
+  //  2. ask to include: lowercase, uppercase, numerics, special characters
   var pwLowercase = confirm("Include lowercase?");
   var pwUppercase = confirm("Include uppercase?");
   var pwNumerics = confirm("Include numbers?");
@@ -27,17 +38,6 @@ function generatePassword() {
   let selectedCharacters = [];
   //  3. generate password based on selections
   var genPW = function () {
-    //  2. pw length is between 8 - 128
-    var pwLength = function () {
-      var pwLengths = prompt('Please enter desired password length: ');
-
-      if(pwLengths<8 || pwLengths>128) {
-        alert('Please enter a value between 8 and 128');
-        pwLength();
-      }
-    };
-    pwLength();
-
     //if user wants lowercase add them to selectedCharacters array
     if (pwLowercase == true ) {
       selectedCharacters = [...selectedCharacters, ...pwLowers];
@@ -58,12 +58,13 @@ function generatePassword() {
     //4. validate user input and make sure AT LEAST 1 character type is selected
     if (selectedCharacters.length === 0) {
       alert("You must select at least one character type! Please try again.");
+    } else {
+      selectedCharacters.length == pwLength;
     }
-    console.log(selectedCharacters);
-  };
+  }
   genPW();
-  //  5. take user input and use it to generate password
-  let password = ;
+  //  5. take user input and generate password:
+  let password = selectedCharacters[Math.floor(Math.random() * selectedCharacters.length)];
   return password;
 }
 
